@@ -1,11 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -20,7 +16,7 @@ namespace Business.Concrete
 
         public void Add(Brand brand)
         {
-            if (brand.Name.Length > 1)
+            if (brand.BrandName.Length > 1)
             {
                 _brandDal.Add(brand);
             }
@@ -28,7 +24,12 @@ namespace Business.Concrete
 
         public void Delete(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Delete(brand);
+        }
+
+        public Brand Get(int brandId)
+        {
+            return _brandDal.Get(b => b.BrandId == brandId);
         }
 
         public List<Brand> GetAll()
@@ -36,14 +37,9 @@ namespace Business.Concrete
             return _brandDal.GetAll();
         }
 
-        public Brand GetById(int id)
-        {
-            return _brandDal.Get(b => b.Id == id);
-        }
-
         public void Update(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Update(brand);
         }
     }
 }

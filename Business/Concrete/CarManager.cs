@@ -1,11 +1,8 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
+using Entities.DTOs;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -20,7 +17,7 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if (car.DailyPrice > 0)
+            if (car.DailyPrice > 0 && car.CarName.Length > 1)
             {
                 _carDal.Add(car);
             }
@@ -28,7 +25,12 @@ namespace Business.Concrete
 
         public void Delete(Car car)
         {
-            throw new NotImplementedException();
+            _carDal.Delete(car);
+        }
+
+        public Car Get(int carId)
+        {
+            return _carDal.Get(c => c.CarId == carId);
         }
 
         public List<Car> GetAll()
@@ -36,24 +38,24 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public Car GetById(int id)
+        public List<CarDetailDto> GetCarDetails()
         {
-            return _carDal.Get(c => c.Id == id);
+            return _carDal.GetCarDetails();
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public List<Car> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(c => c.BrandId == id);
+            return _carDal.GetAll(c => c.BrandId == brandId);
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public List<Car> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == id);
+            return _carDal.GetAll(c => c.ColorId == colorId);
         }
 
         public void Update(Car car)
         {
-            throw new NotImplementedException();
+            _carDal.Update(car);
         }
     }
 }

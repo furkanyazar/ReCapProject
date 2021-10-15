@@ -4,9 +4,9 @@ using System;
 
 namespace ConsoleUI
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new EfCarDal());
 

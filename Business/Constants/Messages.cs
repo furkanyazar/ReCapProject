@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Business.Constants
+﻿namespace Business.Constants
 {
     public static class Messages
     {
@@ -26,5 +20,20 @@ namespace Business.Constants
         public static string CarsListed = "Arabalar listelendi";
         public static string CarNameInvalid = "Araba ismi geçersiz";
         public static string DailyPriceInvalid = "Günlük ücret geçersiz";
+
+        public static string CustomerAdded = "Müşteri eklendi";
+        public static string CustomerDeleted = "Müşteri silindi";
+        public static string CustomerUpdated = "Müşteri güncellendi";
+        public static string CustomersListed = "Müşteriler listelendi";
+
+        public static string RentalAdded = "Kiralama eklendi";
+        public static string RentalDeleted = "Kiralama silindi";
+        public static string RentalUpdated = "Kiralama güncellendi";
+        public static string RentalsListed = "Kiralamaler listelendi";
+
+        public static string UserAdded = "Kullanıcı eklendi";
+        public static string UserDeleted = "Kullanıcı silindi";
+        public static string UserUpdated = "Kullanıcı güncellendi";
+        public static string UsersListed = "Kullanıcıler listelendi";
     }
 }

@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Uploads\Images\default.png" />
+  </ItemGroup>
+
 </Project>

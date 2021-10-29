@@ -8,7 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Rental>> GetAll();
 
-        IDataResult<Rental> Get(int rentalId);
+        IDataResult<Rental> GetByRentalId(int rentalId);
 
         IResult Add(Rental rental);
 

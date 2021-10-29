@@ -35,5 +35,12 @@
         public static string UserDeleted = "Kullanıcı silindi";
         public static string UserUpdated = "Kullanıcı güncellendi";
         public static string UsersListed = "Kullanıcıler listelendi";
+
+        public static string CarImageAdded = "Araba fotoğrafı eklendi";
+        public static string CarImageDeleted = "Araba fotoğrafı silindi";
+        public static string CarImageUpdated = "Araba fotoğrafı güncellendi";
+        public static string CarImagesListed = "Araba fotoğrafları listelendi";
+        public static string CarImageIsNotExists = "Araba fotoğrafı yok";
+        public static string CarImageLimitExceeded = "Araba fotoğrafı sınırı aşıldı";
     }
 }

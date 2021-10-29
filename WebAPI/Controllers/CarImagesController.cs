@@ -1,24 +1,25 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CarImagesController : ControllerBase
     {
-        private ICustomerService _customerService;
+        private ICarImageService _carImageService;
 
-        public CustomersController(ICustomerService customerService)
+        public CarImagesController(ICarImageService carImageService)
         {
-            _customerService = customerService;
+            _carImageService = carImageService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _customerService.GetAll();
+            var result = _carImageService.GetAll();
 
             if (result.Success)
             {
@@ -28,10 +29,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbycustomerid")]
-        public IActionResult GetByCustomerId(int customerID)
+        [HttpGet("getbycarimageid")]
+        public IActionResult GetByCarImageId(int carImageId)
         {
-            var result = _customerService.GetByCustomerId(customerID);
+            var result = _carImageService.GetByCarImageId(carImageId);
 
             if (result.Success)
             {
@@ -41,23 +42,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getcustomersdetails")]
-        public IActionResult GetCustomersDetails()
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int carId)
         {
-            var result = _customerService.GetCustomersDetails();
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
-        [HttpGet("getbyuserid")]
-        public IActionResult GetByUserId(int userId)
-        {
-            var result = _customerService.GetByUserId(userId);
+            var result = _carImageService.GetByCarId(carId);
 
             if (result.Success)
             {
@@ -68,9 +56,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Customer customer)
+        public IActionResult Add(IFormFile file, [FromForm] CarImage carImage)
         {
-            var result = _customerService.Add(customer);
+            var result = _carImageService.Add(file, carImage);
 
             if (result.Success)
             {
@@ -81,9 +69,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Customer customer)
+        public IActionResult Update(IFormFile file, [FromForm] CarImage carImage)
         {
-            var result = _customerService.Update(customer);
+            var result = _carImageService.Update(file, carImage);
 
             if (result.Success)
             {
@@ -94,9 +82,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Customer customer)
+        public IActionResult Delete(CarImage carImage)
         {
-            var result = _customerService.Delete(customer);
+            var result = _carImageService.Delete(carImage);
 
             if (result.Success)
             {

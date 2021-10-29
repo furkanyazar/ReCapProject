@@ -21,11 +21,6 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
-            //if (color.ColorName.Length < 2)
-            //{
-            //    return new ErrorResult(Messages.ColorNameInvalid);
-            //}
-
             _colorDal.Add(color);
 
             return new SuccessResult(Messages.ColorAdded);
@@ -38,7 +33,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public IDataResult<Color> Get(int colorId)
+        public IDataResult<Color> GetByColorId(int colorId)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId), Messages.ColorsListed);
         }
@@ -48,6 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
             _colorDal.Update(color);

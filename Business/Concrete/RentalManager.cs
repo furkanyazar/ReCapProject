@@ -33,7 +33,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<Rental> Get(int rentalId)
+        public IDataResult<Rental> GetByRentalId(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId), Messages.RentalsListed);
         }
@@ -43,6 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);

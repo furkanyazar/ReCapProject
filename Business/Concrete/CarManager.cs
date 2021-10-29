@@ -22,15 +22,6 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            //if (car.CarName.Length < 2)
-            //{
-            //    return new ErrorResult(Messages.CarNameInvalid);
-            //}
-            //else if (car.DailyPrice < 1)
-            //{
-            //    return new ErrorResult(Messages.DailyPriceInvalid);
-            //}
-
             _carDal.Add(car);
 
             return new SuccessResult(Messages.CarAdded);
@@ -43,7 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
-        public IDataResult<Car> Get(int carId)
+        public IDataResult<Car> GetByCarId(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId), Messages.CarsListed);
         }
@@ -68,6 +59,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), Messages.CarsListed);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);

@@ -8,7 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<List<User>> GetAll();
 
-        IDataResult<User> Get(int userId);
+        IDataResult<User> GetByUserId(int userId);
 
         IResult Add(User user);
 

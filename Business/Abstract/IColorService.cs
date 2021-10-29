@@ -8,7 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Color>> GetAll();
 
-        IDataResult<Color> Get(int colorId);
+        IDataResult<Color> GetByColorId(int colorId);
 
         IResult Add(Color color);
 

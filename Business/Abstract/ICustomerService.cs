@@ -9,9 +9,9 @@ namespace Business.Abstract
     {
         IDataResult<List<Customer>> GetAll();
 
-        IDataResult<Customer> Get(int customerId);
+        IDataResult<Customer> GetByCustomerId(int customerId);
 
-        IDataResult<Customer> GetCustomerByUserId(int userId);
+        IDataResult<Customer> GetByUserId(int userId);
 
         IResult Add(Customer customer);
 

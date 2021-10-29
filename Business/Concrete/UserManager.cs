@@ -33,7 +33,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserDeleted);
         }
 
-        public IDataResult<User> Get(int userId)
+        public IDataResult<User> GetByUserId(int userId)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId), Messages.UsersListed);
         }
@@ -43,6 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
             _userDal.Update(user);

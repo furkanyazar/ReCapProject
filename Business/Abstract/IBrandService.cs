@@ -8,7 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Brand>> GetAll();
 
-        IDataResult<Brand> Get(int brandId);
+        IDataResult<Brand> GetByBrandId(int brandId);
 
         IResult Add(Brand brand);
 

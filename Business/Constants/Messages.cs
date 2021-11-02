@@ -42,5 +42,14 @@
         public static string CarImagesListed = "Araba fotoğrafları listelendi";
         public static string CarImageIsNotExists = "Araba fotoğrafı yok";
         public static string CarImageLimitExceeded = "Araba fotoğrafı sınırı aşıldı";
+
+        public static string AuthorizationDenied = "Yetkilendirme reddedildi";
+        public static string UserRegistered = "Kullanıcı kaydedildi";
+        public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string PasswordError = "Hatalı şifre";
+        public static string SuccessfulLogin = "Giriş başarılı";
+        public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
+        public static string AccessTokenCreated = "Erişim başarılı";
+        public static string Success = "İşlem başarılı";
     }
 }

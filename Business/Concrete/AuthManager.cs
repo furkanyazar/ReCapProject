@@ -23,6 +23,7 @@ namespace Business.Concrete
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
             var user = new User
             {
                 Email = userForRegisterDto.Email,
@@ -32,13 +33,16 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
+
             _userService.Add(user);
+
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
+
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -54,10 +58,11 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            if (_userService.GetByMail(email).Data != null)
             {
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
+
             return new SuccessResult();
         }
 
@@ -65,6 +70,7 @@ namespace Business.Concrete
         {
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
     }

@@ -23,7 +23,7 @@ namespace Business.Concrete
             _fileHelper = fileHelper;
         }
 
-        [SecuredOperation("carimage.add,customer,admin")]
+        [SecuredOperation("customer,admin")]
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
@@ -40,7 +40,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageAdded);
         }
 
-        [SecuredOperation("carimage.delete,customer,admin")]
+        [SecuredOperation("customer,admin")]
         public IResult Delete(CarImage carImage)
         {
             _fileHelper.Delete(PathConstants.ImagesPath + carImage.ImagePath);
@@ -71,7 +71,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId), Messages.CarImagesListed);
         }
 
-        [SecuredOperation("carimage.update,customer,admin")]
+        [SecuredOperation("customer,admin")]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             carImage.ImagePath = _fileHelper.Update(file, PathConstants.ImagesPath + carImage.ImagePath, PathConstants.ImagesPath);

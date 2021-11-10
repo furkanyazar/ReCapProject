@@ -19,7 +19,7 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        [SecuredOperation("brand.add,admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
@@ -28,7 +28,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
 
-        [SecuredOperation("brand.delete,admin")]
+        [SecuredOperation("admin")]
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
         }
 
-        [SecuredOperation("brand.update,admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {

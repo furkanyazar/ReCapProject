@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Aspects.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -14,13 +15,16 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         private ICarDal _carDal;
+        private ICarImageService _carImageService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
 
         [SecuredOperation("customer,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -30,6 +34,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("customer,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -42,6 +47,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId), Messages.CarsListed);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
@@ -49,7 +55,19 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(), Messages.CarsListed);
+            List<CarDetailDto> carDetailDtos = _carDal.GetCarsDetails();
+
+            foreach (var carDetailDto in carDetailDtos)
+            {
+                carDetailDto.CarImagesPaths = new List<string>();
+
+                foreach (var data in _carImageService.GetByCarId(carDetailDto.CarId).Data)
+                {
+                    carDetailDto.CarImagesPaths.Add(data.ImagePath);
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(carDetailDtos, Messages.CarsListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
@@ -63,12 +81,76 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("customer,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
 
             return new SuccessResult(Messages.CarUpdated);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandId(int brandId)
+        {
+            List<CarDetailDto> carDetailDtos = _carDal.GetCarsDetailsByBrandId(brandId);
+
+            foreach (var carDetailDto in carDetailDtos)
+            {
+                carDetailDto.CarImagesPaths = new List<string>();
+
+                foreach (var data in _carImageService.GetByCarId(carDetailDto.CarId).Data)
+                {
+                    carDetailDto.CarImagesPaths.Add(data.ImagePath);
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(carDetailDtos, Messages.CarsListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsByColorId(int colorId)
+        {
+            List<CarDetailDto> carDetailDtos = _carDal.GetCarsDetailsByColorId(colorId);
+
+            foreach (var carDetailDto in carDetailDtos)
+            {
+                carDetailDto.CarImagesPaths = new List<string>();
+
+                foreach (var data in _carImageService.GetByCarId(carDetailDto.CarId).Data)
+                {
+                    carDetailDto.CarImagesPaths.Add(data.ImagePath);
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(carDetailDtos, Messages.CarsListed);
+        }
+
+        public IDataResult<CarDetailDto> GetCarDetail(int carId)
+        {
+            CarDetailDto carDetailDto = _carDal.GetCarDetailDto(carId);
+            carDetailDto.CarImagesPaths = new List<string>();
+
+            foreach (var data in _carImageService.GetByCarId(carId).Data)
+            {
+                carDetailDto.CarImagesPaths.Add(data.ImagePath);
+            }
+
+            return new SuccessDataResult<CarDetailDto>(carDetailDto, Messages.CarsListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandIdAndColorId(int brandId, int colorId)
+        {
+            List<CarDetailDto> carDetailDtos = _carDal.GetCarsDetailsByBrandIdAndColorId(brandId, colorId);
+
+            foreach (var carDetailDto in carDetailDtos)
+            {
+                carDetailDto.CarImagesPaths = new List<string>();
+
+                foreach (var data in _carImageService.GetByCarId(carDetailDto.CarId).Data)
+                {
+                    carDetailDto.CarImagesPaths.Add(data.ImagePath);
+                }
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(carDetailDtos, Messages.CarsListed);
         }
     }
 }

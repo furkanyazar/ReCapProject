@@ -22,7 +22,6 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        [SecuredOperation("rental.add,customer,admin")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
@@ -72,9 +71,14 @@ namespace Business.Concrete
             return null;
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalsDetails()
+        public IDataResult<List<RentalsDetailDto>> GetRentalsDetails()
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails(), Messages.RentalsListed);
+            return new SuccessDataResult<List<RentalsDetailDto>>(_rentalDal.GetRentalsDetails(), Messages.RentalsListed);
+        }
+
+        public IDataResult<RentalDetailDto> GetRentalDetails(int rentalId)
+        {
+            return new SuccessDataResult<RentalDetailDto>(_rentalDal.GetRentalDetails(rentalId), Messages.RentalsListed);
         }
     }
 }
